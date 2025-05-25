@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Générateur de citations</title>
+  <style>
+    body { background-color: grey ;font-family: Arial, sans-serif; text-align: center; padding: 2em; margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    align-items: center;}
+    #quote { font-size: 2.5em; transition: opacity 0.5s; text-align: center; transform: scale(1); max-width: 80%;}
+    button { margin-top: 1em; padding: 0.5em 1em; }
+  </style>
+</head>
+<body>
+  <div id="quote">Cliquez sur le bouton pour une citation !</div>
+  <button onclick="newQuote()">Nouvelle citation</button>
+  <script>
+    const quotes = [
+      "Le succès est la somme de petits efforts répétés jour après jour.",
+      "N’attendez pas. Le temps ne sera jamais juste.",
+      "Croyez en vous et tout devient possible.",
+      "Chaque jour est une nouvelle chance de réussir.",
+      "Le succès est la somme de petits efforts répétés jour après jour.",
+      "N’attendez pas. Le temps ne sera jamais juste.",
+      "Croyez en vous et tout devient possible.",
+      "Chaque jour est une nouvelle chance de réussir.",
+      "« Ne rêve pas ta vie, vis ton rêve. »",
+      "« La seule limite à notre épanouissement de demain, ce sont nos doutes et hésitations d’aujourd’hui. »",
+      "« Ce n’est pas la force, mais la persévérance qui fait les grandes œuvres. »",
+      "« Le courage ne rugit pas toujours. Parfois, il est une petite voix qui dit : ‘Je recommencerai demain.’ »",
+      "« L’échec est seulement l’opportunité de recommencer de manière plus intelligente. »",
+      "« Le seul endroit où le succès vient avant le travail, c’est dans le dictionnaire. »",
+      "« Votre avenir est créé par ce que vous faites aujourd’hui, pas demain. »"
+    ];
+    function newQuote() {
+      const quoteEl = document.getElementById('quote');
+      quoteEl.style.opacity = 0;
+      setTimeout(() => {
+        quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+        quoteEl.style.opacity = 1;
+      }, 500);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nacime Boubekeur – Développeur Web</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Nacime Boubekeur</h1>
+    <p>Futur développeur web – à la recherche d’une alternance</p>
+    <nav>
+      <ul>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#cv">CV</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button id="toggle-dark">🌓</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="projets">
+      <h2>Mes projets</h2>
+
+      <div class="projet">
+        <h3>Générateur de citations</h3>
+        <p><a href="citations/index.html" target="_blank">Voir le projet</a> – Petit script JavaScript qui affiche aléatoirement une citation motivante.</p>
+      </div>
+
+      <div class="projet">
+        <h3>To-Do List</h3>
+        <p><a href="todolist/index.html" target="_blank">Voir le projet</a> – Application locale simple pour ajouter, cocher et supprimer des tâches.</p>
+      </div>
+
+      <div class="projet">
+        <h3>Formulaire interactif</h3>
+        <p><a href="formulaire/index.html" target="_blank">Voir le projet</a> – Formulaire avec validation en direct et messages animés.</p>
+      </div>
+    </section>
+
+
+    <section id="cv">
+      <h2>Mon CV</h2>
+      <p><a href="img/CV Nacime.pdf" target="_blank" class="btn">📄 Télécharger mon CV (PDF)</a></p>
+    </section>
+
+    <section id="apropos">
+      <h2>À propos</h2>
+      <p>
+        Salut, moi c’est Nacime ! 💻  
+        Je suis développeur web, sans discours trop inspirés : je code parce que c’est concret, utile, et que ça me permet de gagner ma vie tout en kiffant ce que je fais.  <br>
+        Côté perso, je bosse dur à la salle 🏋️‍♂️ pour progresser physiquement (pas encore challenger, mais j’y travaille), et quand je ne fais pas de pompes, je feed un peu sur LoL 🎮 — on peut pas être parfait partout, hein ? 😅  <br>
+        Je suis aussi fan de cinéma 🎬 et d’anime 🌀, parce que bon, faut bien se détendre.  <br>
+        Je ne prétends pas vouloir révolutionner le web, mais je fais les choses sérieusement, proprement, et avec une touche de fun quand je peux.  <br>
+        Si on peut bosser ensemble dans une bonne ambiance 🤝 et faire avancer des projets cools, je suis partant !
+      </p>
+    </section>
+
+    <section id="contactform">
+      <h2>Contact</h2>
+      <form action="contact.php" method="POST" class="contact-form">
+        <label for="name">Nom</label>
+        <input type="text" name="name" id="name" required>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="5" required></textarea>
+        <button type="submit" class="btn">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 – Nacime Boubekeur</p>
+  </footer>
+</body>
+</html>

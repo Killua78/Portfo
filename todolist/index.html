@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List</title>
+  <style>
+    body { background-color: grey; font-family: sans-serif; max-width: 500px; margin: 7% auto; padding: 2em; }
+    input, button { padding: 0.5em; margin: 0.5em 0; width: 100%; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.5em; border-bottom: 1px solid #ddd; }
+    .remove { float: right; cursor: pointer; color: red; }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <input id="taskInput" placeholder="Nouvelle tâche">
+  <button onclick="addTask()">Ajouter</button>
+  <ul id="taskList"></ul>
+  <script>
+    const input = document.getElementById('taskInput');
+    const list = document.getElementById('taskList');
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+      list.innerHTML = '';
+      tasks.forEach((task, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = task + '<span class="remove" onclick="removeTask(' + i + ')">✖</span>';
+        list.appendChild(li);
+      });
+    }
+    function addTask() {
+      const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+      if (input.value.trim()) {
+        tasks.push(input.value.trim());
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        input.value = '';
+        loadTasks();
+      }
+    }
+    function removeTask(index) {
+      const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+      tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      loadTasks();
+    }
+    loadTasks();
+  </script>
+</body>
+</html>
