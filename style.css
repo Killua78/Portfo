@@ -1,3 +1,6 @@
+/* --------------------------------------------------
+   Reset de base et variables globales
+-------------------------------------------------- */
 * {
   box-sizing: border-box;
 }
@@ -8,12 +11,16 @@
   --accent-color: #007acc;
 }
 
+/* Mode sombre (activé dynamiquement via JavaScript) */
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #eaeaea;
   --accent-color: #66ccff;
 }
 
+/* --------------------------------------------------
+   Style général du body
+-------------------------------------------------- */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -22,6 +29,9 @@ body {
   padding: 0;
 }
 
+/* --------------------------------------------------
+   En-tête et pied de page
+-------------------------------------------------- */
 header, footer {
   text-align: center;
   padding: 2em;
@@ -29,6 +39,9 @@ header, footer {
   color: white;
 }
 
+/* --------------------------------------------------
+   Navigation
+-------------------------------------------------- */
 nav ul {
   list-style: none;
   padding: 0;
@@ -43,6 +56,21 @@ nav a, .btn {
   font-weight: bold;
 }
 
+/* Animation au survol des éléments de menu */
+ul li {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0.8;
+}
+
+ul li:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
+/* --------------------------------------------------
+   Bouton global (réutilisable)
+-------------------------------------------------- */
 .btn {
   background-color: var(--accent-color);
   padding: 0.5em 1em;
@@ -50,38 +78,54 @@ nav a, .btn {
   cursor: pointer;
   display: inline-block;
   margin-top: 1em;
+  border-radius: 6px;
+  user-select: none; /* empêche la sélection du texte en cliquant */
+  transition: background-color 0.3s ease;
 }
 
+.btn:hover {
+  background-color: #005f99;
+}
+
+/* --------------------------------------------------
+   Contenu principal
+-------------------------------------------------- */
 main {
   padding: 2em;
   max-width: 800px;
   margin: auto;
 }
 
+/* Section générique */
 section {
   margin-bottom: 2em;
 }
 
+/* --------------------------------------------------
+   Section : Projets
+-------------------------------------------------- */
 .projet {
   border-left: 4px solid var(--accent-color);
   padding-left: 1em;
   margin-bottom: 1em;
 }
 
-ul li{
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  opacity: 0.8;
-}
+/* --------------------------------------------------
+   Section : CV
+   (le lien utilise déjà la classe .btn)
+-------------------------------------------------- */
 
-ul li:hover{
-  transform: scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  opacity: 1;
-}
+/* --------------------------------------------------
+   Section : À propos
+   (pas de styles spécifiques, hérite du style général)
+-------------------------------------------------- */
 
+/* --------------------------------------------------
+   Section : Contact
+-------------------------------------------------- */
 #contactform {
   background-color: var(--bg-color);
-  padding: 4em 2em;
+  padding: 4em 0;
 }
 
 #contactform h2 {
@@ -91,8 +135,9 @@ ul li:hover{
   color: var(--text-color);
 }
 
+/* Formulaire */
 .contact-form {
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   background-color: white;
   padding: 2em;
@@ -106,6 +151,7 @@ body.dark-mode .contact-form {
   box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
 }
 
+/* Champs du formulaire */
 .contact-form label {
   display: block;
   margin-bottom: 0.5em;
@@ -128,29 +174,82 @@ body.dark-mode .contact-form {
 body.dark-mode .contact-form input,
 body.dark-mode .contact-form textarea {
   background-color: #2a2a2a;
-  color: #eaeaea;
-  border-color: #444;
+  border: 1px solid #555;
+  color: #eee;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
   outline: none;
+  box-shadow: 0 0 8px var(--accent-color);
 }
 
-.contact-form .btn {
-  width: 100%;
-  padding: 0.75em;
+/* Message de réponse (simulé) */
+#response {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 1em;
+  margin-top: 0;
+  overflow: hidden;
+  color: #155724;
+  background-color: #d4edda;
   border-radius: 8px;
-  font-size: 1em;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: bold;
+  transition: max-height 0.6s ease, opacity 0.6s ease, padding 0.6s ease, margin-top 0.6s ease;
 }
 
-.contact-form .btn:hover {
-  background-color: darken(var(--accent-color), 10%);
+#response.show {
+  max-height: 200px;
+  opacity: 1;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+/* --------------------------------------------------
+   Section : Bouton fuyant
+-------------------------------------------------- */
+/* Le conteneur n’est plus nécessaire, mais on garde le bouton flottant */
+#fun-button {
+  display: none; /* On peut même supprimer ce bloc si tu veux */
+}
+
+#tricky-btn {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+/* disparition de la page  */
+
+.collapse-page * {
+  transition: all 1s ease;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+}
+
+.collapse-page {
+  background-color: black !important;
+  transition: background-color 2s ease;
+}
+
+
+
+/* --------------------------------------------------
+   Responsive
+-------------------------------------------------- */
+@media (max-width: 600px) {
+  main {
+    padding: 1em;
+  }
+  nav ul {
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  #fun-button {
+    max-width: 100%;
+  }
 }

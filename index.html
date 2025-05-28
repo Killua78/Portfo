@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nacime Boubekeur – Développeur Web</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -14,9 +14,9 @@
     <nav>
       <ul>
         <li><a href="#projets">Projets</a></li>
-        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#apropos">À propos</a></li>
         <li><a href="#cv">CV</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contactform">Contact</a></li>
         <li><button id="toggle-dark">🌓</button></li>
       </ul>
     </nav>
@@ -42,6 +42,9 @@
       </div>
     </section>
 
+    <button id="tricky-btn" class="btn">
+      Ne surtout pas appuyer
+    </button>
 
     <section id="cv">
       <h2>Mon CV</h2>
@@ -51,12 +54,14 @@
     <section id="apropos">
       <h2>À propos</h2>
       <p>
-        Salut, moi c’est Nacime ! 💻  
-        Je suis développeur web, sans discours trop inspirés : je code parce que c’est concret, utile, et que ça me permet de gagner ma vie tout en kiffant ce que je fais.  <br>
-        Côté perso, je bosse dur à la salle 🏋️‍♂️ pour progresser physiquement (pas encore challenger, mais j’y travaille), et quand je ne fais pas de pompes, je feed un peu sur LoL 🎮 — on peut pas être parfait partout, hein ? 😅  <br>
-        Je suis aussi fan de cinéma 🎬 et d’anime 🌀, parce que bon, faut bien se détendre.  <br>
-        Je ne prétends pas vouloir révolutionner le web, mais je fais les choses sérieusement, proprement, et avec une touche de fun quand je peux.  <br>
-        Si on peut bosser ensemble dans une bonne ambiance 🤝 et faire avancer des projets cools, je suis partant !
+        Salut, moi c’est Nacime ! 💻<br /><br />
+        Je suis développeur web, avec une approche simple : j’aime créer des choses utiles, concrètes, et trouver du sens dans ce que je fais. Le code, c’est pour moi un bon équilibre entre logique et créativité.<br /><br />
+
+        Côté perso, je travaille régulièrement sur moi, que ce soit physiquement ou mentalement. L’idée, c’est d’avancer étape par étape, sans prétention mais avec régularité.<br />
+        Quand je déconnecte, je me plonge dans l’univers du cinéma 🎬, des animes 🌀 ou quelques parties de LoL 🎮 — parce qu’il faut aussi savoir souffler.<br /><br />
+
+        Je ne cherche pas à tout révolutionner, mais j’ai à cœur de faire les choses proprement, avec sérieux… et un brin de bonne humeur quand l’occasion se présente.<br />
+        Si tu penses qu’on peut faire avancer des projets intéressants ensemble 🤝, je suis partant !
       </p>
     </section>
 
@@ -64,9 +69,9 @@
       <h2>Contact</h2>
       <form action="contact.php" method="POST" class="contact-form">
         <label for="name">Nom</label>
-        <input type="text" name="name" id="name" required>
+        <input type="text" name="name" id="name" required />
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" required />
         <label for="message">Message</label>
         <textarea name="message" id="message" rows="5" required></textarea>
         <button type="submit" class="btn">Envoyer</button>
