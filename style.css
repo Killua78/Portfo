@@ -79,7 +79,7 @@ ul li:hover {
   display: inline-block;
   margin-top: 1em;
   border-radius: 6px;
-  user-select: none; /* empêche la sélection du texte en cliquant */
+  user-select: none;
   transition: background-color 0.3s ease;
 }
 
@@ -104,10 +104,83 @@ section {
 /* --------------------------------------------------
    Section : Projets
 -------------------------------------------------- */
+h2 {
+  text-align: center;
+  font-size: 2.2em;
+  margin-bottom: 1.5em;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 0.5em auto 0;
+  background-color: var(--accent-color);
+  border-radius: 2px;
+}
+
 .projet {
-  border-left: 4px solid var(--accent-color);
-  padding-left: 1em;
-  margin-bottom: 1em;
+  background-color: white;
+  padding: 1.5em;
+  border-radius: 12px;
+  margin-bottom: 1.5em;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.projet:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.projet h3 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: var(--accent-color);
+}
+
+.projet a {
+  color: var(--accent-color);
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.projet a:hover {
+  color: #005f99;
+  text-decoration: underline;
+}
+
+body.dark-mode .projet {
+  background-color: #1e1e1e;
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+}
+
+/* Tags de technologies */
+.tag {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 0.75em;
+  padding: 0.3em 0.6em;
+  border-radius: 4px;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+/* --------------------------------------------------
+   Section : CV
+-------------------------------------------------- */
+
+#cv p{
+  text-align: center;
+}
+
+#cv p .btn{
+  margin: 0;
 }
 
 /* --------------------------------------------------
@@ -115,7 +188,7 @@ section {
 -------------------------------------------------- */
 #contactform {
   background-color: var(--bg-color);
-  padding: 4em 0;
+  padding: 2em 0;
 }
 
 #contactform h2 {
@@ -203,23 +276,18 @@ body.dark-mode .contact-form textarea {
   bottom: 20px;
   right: 20px;
   z-index: 1000;
-
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
-
   background-color: var(--accent-color);
   color: white;
   font-size: 16px;
   font-family: inherit;
-
   cursor: pointer;
   user-select: none;
-
   white-space: nowrap;
   width: max-content;
   height: max-content;
-
   transition: background-color 0.3s ease;
 }
 
@@ -240,6 +308,33 @@ body.dark-mode .contact-form textarea {
   transition: background-color 2s ease;
 }
 
+/* Mise en valeur du titre de projet */
+.highlight {
+  padding: 0 0.3em;
+  border-radius: 4px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+/* Animation au survol */
+.projet h3:hover .highlight {
+  background: var(--accent-color);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Animation pulsante (si activée via JS) */
+.pulse {
+  animation: pulse 1s ease;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+
 /* --------------------------------------------------
    Responsive
 -------------------------------------------------- */
@@ -247,6 +342,7 @@ body.dark-mode .contact-form textarea {
   main {
     padding: 1em;
   }
+
   nav ul {
     flex-direction: column;
     gap: 0.5em;
@@ -258,6 +354,5 @@ body.dark-mode .contact-form textarea {
     bottom: 20px;
     right: 50%;
     transform: translateX(50%);
-    /* pour centrer horizontalement en bas */
   }
 }

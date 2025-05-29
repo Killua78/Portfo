@@ -70,3 +70,12 @@ document.body.addEventListener('mousemove', (e) => {
 btn.addEventListener('click', () => {
   document.body.classList.add('collapse-page');
 });
+
+document.querySelectorAll('.projet h3').forEach(h3 => {
+  h3.addEventListener('mouseenter', () => {
+    h3.classList.add('pulse');
+  });
+  h3.addEventListener('mouseleave', () => {
+    h3.classList.remove('pulse');
+  });
+});
