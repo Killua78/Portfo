@@ -18,7 +18,7 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
   // Récupérer les données du formulaire
   const formData = new FormData(form);
 
-  fetch(form.action, {
+  fetch('contact.php', {
     method: form.method,
     body: formData,
   })
@@ -35,6 +35,8 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
   .catch(err => {
     response.textContent = "Erreur lors de l'envoi, merci de réessayer.";
     response.classList.add('show');
+    response.style.backgroundColor = 'red';
+    response.style.color = 'white';
   });
 });
 

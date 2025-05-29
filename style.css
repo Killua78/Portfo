@@ -111,16 +111,6 @@ section {
 }
 
 /* --------------------------------------------------
-   Section : CV
-   (le lien utilise déjà la classe .btn)
--------------------------------------------------- */
-
-/* --------------------------------------------------
-   Section : À propos
-   (pas de styles spécifiques, hérite du style général)
--------------------------------------------------- */
-
-/* --------------------------------------------------
    Section : Contact
 -------------------------------------------------- */
 #contactform {
@@ -137,7 +127,6 @@ section {
 
 /* Formulaire */
 .contact-form {
-  max-width: 600px;
   margin: 0 auto;
   background-color: white;
   padding: 2em;
@@ -209,21 +198,36 @@ body.dark-mode .contact-form textarea {
 /* --------------------------------------------------
    Section : Bouton fuyant
 -------------------------------------------------- */
-/* Le conteneur n’est plus nécessaire, mais on garde le bouton flottant */
-#fun-button {
-  display: none; /* On peut même supprimer ce bloc si tu veux */
-}
-
 #tricky-btn {
   position: fixed;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
+  bottom: 20px;
+  right: 20px;
   z-index: 1000;
+
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 16px;
+  font-family: inherit;
+
+  cursor: pointer;
+  user-select: none;
+
+  white-space: nowrap;
+  width: max-content;
+  height: max-content;
+
+  transition: background-color 0.3s ease;
+}
+
+#tricky-btn:hover {
+  background-color: #005f99;
 }
 
 /* disparition de la page  */
-
 .collapse-page * {
   transition: all 1s ease;
   opacity: 0;
@@ -236,8 +240,6 @@ body.dark-mode .contact-form textarea {
   transition: background-color 2s ease;
 }
 
-
-
 /* --------------------------------------------------
    Responsive
 -------------------------------------------------- */
@@ -249,7 +251,13 @@ body.dark-mode .contact-form textarea {
     flex-direction: column;
     gap: 0.5em;
   }
-  #fun-button {
-    max-width: 100%;
+
+  /* Bouton fuyant en bas centré sur mobile */
+  #tricky-btn {
+    top: auto;
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    /* pour centrer horizontalement en bas */
   }
 }
