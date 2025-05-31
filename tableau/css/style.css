@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 15px;
+    text-align: center; /* Centrer tout le contenu */
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Ombre légère */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #f4f4f4;
+}
+
+/* Ligne survolée en bleu clair */
+tbody tr:hover {
+    background-color: #f0f8ff;
+}
+
+/* Couleur de fond alternée pour les lignes paires */
+tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+a.button, button {
+    background: #007BFF;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 5px;
+    transition: opacity 0.3s ease;
+}
+
+/* Bouton ajouter en vert */
+a.button.add {
+    background-color: #28a745;
+}
+
+a.button.delete {
+    background: #dc3545;
+}
+
+a.button:hover, button:hover {
+    opacity: 0.8;
+}
+
+/* ===== AJOUTS POUR FORMULAIRES ===== */
+
+form {
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: left; /* Texte aligné à gauche dans le formulaire */
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 8px 0 16px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+button {
+    padding: 8px 20px; /* un peu plus gros que les liens */
+    font-size: 16px;
+}
+
+/* Message de confirmation */
+.message {
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* Message d’erreur */
+.message.error {
+    color: #dc3545;
+}
+
+/* Pour que le bouton "Retour" reste centré sous le formulaire */
+a.button {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 14px;
+}

@@ -2,125 +2,153 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>To-Do List</title>
   <style>
-    /* Corps et conteneur */
+    /* Reset et corps */
     body {
-      background-color: #f0f0f0; /* gris très clair pour moins dur */
+      background-color: #f0f0f0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 500px;
-      margin: 7% auto;
-      padding: 2em 1.5em;
-      color: #222;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      border-radius: 8px;
+      margin: 0;
+      padding: 1em;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
     }
 
+    /* Conteneur principal */
+    #container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 2em 1.5em;
+      width: 100%;
+      max-width: 480px;  /* max largeur sur grand écran */
+      box-sizing: border-box;
+      margin-top: 3em;
+    }
+
+    /* Titres */
     h1 {
       text-align: center;
-      margin-bottom: 1.2em;
-      font-weight: 600;
-      color: #333;
+      margin-bottom: 1.5em;
+      font-weight: 700;
+      font-size: 2em;
+      color: #222;
     }
 
-    /* Champs input et bouton */
+    /* Inputs & boutons */
     input, button {
-      padding: 0.7em 1em;
-      margin: 0.5em 0;
       width: 100%;
-      font-size: 1em;
-      border: 1.8px solid #ccc;
-      border-radius: 6px;
+      padding: 1em 1.2em;
+      margin-bottom: 1em;
+      font-size: 1.2em;
+      border-radius: 8px;
+      border: 1.5px solid #ccc;
       box-sizing: border-box;
       transition: border-color 0.3s ease;
     }
+
     input:focus {
-      outline: none;
       border-color: #007acc;
-      background-color: #fff;
+      outline: none;
       box-shadow: 0 0 8px rgba(0,122,204,0.3);
+      background-color: #fff;
     }
+
     button {
       background-color: #007acc;
-      color: white;
-      font-weight: 600;
+      color: #fff;
+      font-weight: 700;
       border: none;
       cursor: pointer;
       user-select: none;
       transition: background-color 0.3s ease;
     }
-    button:hover {
+
+    button:hover, button:focus {
       background-color: #005f99;
+      outline: none;
     }
 
     /* Liste */
     ul {
       list-style: none;
       padding: 0;
-      margin-top: 1em;
-      max-height: 300px;
+      margin: 0;
+      max-height: 320px;
       overflow-y: auto;
-      border-radius: 6px;
+      border-radius: 8px;
       background: #fff;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+      border: 1px solid #ddd;
     }
 
+    /* Items */
     li {
-      padding: 0.7em 1em;
-      border-bottom: 1px solid #ddd;
       position: relative;
-      font-size: 1.1em;
+      padding: 1em 2.5em 1em 1em;
+      font-size: 1.3em;
       color: #444;
+      border-bottom: 1px solid #eee;
       user-select: none;
     }
+
     li:last-child {
       border-bottom: none;
     }
 
-    /* Bouton de suppression */
+    /* Bouton suppression */
     .remove {
       position: absolute;
-      right: 10px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
       color: #d33;
-      font-weight: 700;
-      font-size: 1.2em;
+      font-weight: 900;
+      font-size: 1.6em;
       transition: color 0.25s ease;
       user-select: none;
     }
+
     .remove:hover {
       color: #a00;
     }
 
-    /* Responsive mobile amélioré */
-    @media (max-width: 400px) {
-      body {
-        margin: 4% 1em;
+    /* Responsive global */
+    @media (max-width: 480px) {
+      #container {
+        margin-top: 1.5em;
         padding: 1.5em 1em;
       }
       h1 {
-        font-size: 1.5em;
+        font-size: 1.8em;
       }
       input, button {
-        font-size: 1.1em;
+        font-size: 1.4em;
+        padding: 1.2em 1em;
       }
       li {
-        font-size: 1em;
+        font-size: 1.2em;
+        padding: 1em 2.8em 1em 1em;
       }
       .remove {
-        font-size: 1.4em;
-        right: 5px;
+        font-size: 1.8em;
+        right: 8px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>To-Do List</h1>
-  <input id="taskInput" placeholder="Nouvelle tâche" />
-  <button onclick="addTask()">Ajouter</button>
-  <ul id="taskList"></ul>
+  <div id="container">
+    <h1>To-Do List</h1>
+    <input id="taskInput" placeholder="Nouvelle tâche" />
+    <button onclick="addTask()">Ajouter</button>
+    <ul id="taskList"></ul>
+  </div>
   <script>
     const input = document.getElementById('taskInput');
     const list = document.getElementById('taskList');
