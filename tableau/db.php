@@ -1,9 +1,9 @@
 <?php
 // Informations de connexion
-$host = 'mysql-portfolio-nacime.alwaysdata.net';
-$db   = 'portfolio-nacime_users';
-$user = '414981';
-$pass = 'naruto78hr'; // mot de passe vide par défaut sur XAMPP
+$host = 'localhost';
+$db   = 'crud_test';
+$user = 'root';
+$pass = ''; // mot de passe vide par défaut sur XAMPP
 $charset = 'utf8mb4';
 
 // Construction de la chaîne de connexion PDO
