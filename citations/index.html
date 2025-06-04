@@ -1,122 +1,129 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Générateur de citations</title>
-    <style>
-      body {
-        background-color: #fff; /* blanc */
-        font-family: Arial, sans-serif;
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1em;
-      }
-      #container {
-        background-color: #f9f9f9;
-        border: 1.8px solid #ccc;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        padding: 2em 3em;
-        max-width: 420px;
-        width: 100%;
-        text-align: center;
-      }
-      #quote {
-        font-size: 1.8em;
-        color: #333;
-        transition: opacity 0.5s;
-        text-align: center;
-        margin-bottom: 1.4em;
-        line-height: 1.4;
-        height: 140px; /* hauteur fixe */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.5em;
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Générateur de citations</title>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em;
+    }
 
-      button {
-        padding: 0.6em 1.4em;
-        font-size: 1.1em;
-        border: 1.5px solid #333;
-        background-color: white;
-        color: #333;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-        min-width: 160px;
-        user-select: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-      }
-      button:hover,
-      button:focus {
-        background-color: #333;
-        color: white;
-        outline: none;
-      }
+    #container {
+      position: relative;
+      background-color: #f9f9f9;
+      border: 1.8px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      height: 320px; /* hauteur fixe ou max */
+      padding: 2em 3em 5em; /* on laisse de la place pour le bouton */
+      box-sizing: border-box;
+      overflow: hidden;
+    }
 
-      /* Par défaut on affiche desktop, cache mobile */
+    #quote {
+      font-size: 1.6em;
+      color: #333;
+      transition: opacity 0.5s;
+      line-height: 1.4;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .btn-container {
+      position: absolute;
+      bottom: 1.4em;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.6em 1.4em;
+      font-size: 1.1em;
+      border: 1.5px solid #333;
+      background-color: white;
+      color: #333;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      min-width: 160px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    button:hover,
+    button:focus {
+      background-color: #333;
+      color: white;
+      outline: none;
+    }
+
+    #btn-desktop {
+      display: inline-block;
+    }
+    #btn-mobile {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
       #btn-desktop {
-        display: inline-block;
-      }
-      #btn-mobile {
         display: none;
       }
-      /* Sur mobile max 600px, inverse affichage */
-      @media (max-width: 600px) {
-        #btn-desktop {
-          display: none;
-        }
-        #btn-mobile {
-          display: inline-block;
-        }
+      #btn-mobile {
+        display: inline-block;
       }
-    </style>
-  </head>
-  <body>
-    <div id="container">
-      <div id="quote">Cliquez sur le bouton pour une citation !</div>
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="quote">Cliquez sur le bouton pour une citation !</div>
 
-      <!-- Bouton desktop -->
+    <div class="btn-container">
       <button id="btn-desktop" onclick="newQuote()">Nouvelle citation</button>
-
-      <!-- Bouton mobile -->
       <button id="btn-mobile" onclick="newQuote()">Tapote-moi</button>
     </div>
+  </div>
 
-    <script>
-      const quotes = [
-        "Le succès est la somme de petits efforts répétés jour après jour.",
-        "N’attendez pas. Le temps ne sera jamais juste.",
-        "Croyez en vous et tout devient possible.",
-        "Chaque jour est une nouvelle chance de réussir.",
-        "Le succès est la somme de petits efforts répétés jour après jour.",
-        "N’attendez pas. Le temps ne sera jamais juste.",
-        "Croyez en vous et tout devient possible.",
-        "Chaque jour est une nouvelle chance de réussir.",
-        "« Ne rêve pas ta vie, vis ton rêve. »",
-        "« La seule limite à notre épanouissement de demain, ce sont nos doutes et hésitations d’aujourd’hui. »",
-        "« Ce n’est pas la force, mais la persévérance qui fait les grandes œuvres. »",
-        "« Le courage ne rugit pas toujours. Parfois, il est une petite voix qui dit : ‘Je recommencerai demain.’ »",
-        "« L’échec est seulement l’opportunité de recommencer de manière plus intelligente. »",
-        "« Le seul endroit où le succès vient avant le travail, c’est dans le dictionnaire. »",
-        "« Votre avenir est créé par ce que vous faites aujourd’hui, pas demain. »",
-      ];
+  <script>
+    const quotes = [
+      "Le succès est la somme de petits efforts répétés jour après jour.",
+      "N’attendez pas. Le temps ne sera jamais juste.",
+      "Croyez en vous et tout devient possible.",
+      "Chaque jour est une nouvelle chance de réussir.",
+      "« Ne rêve pas ta vie, vis ton rêve. »",
+      "« La seule limite à notre épanouissement de demain, ce sont nos doutes et hésitations d’aujourd’hui. »",
+      "« Ce n’est pas la force, mais la persévérance qui fait les grandes œuvres. »",
+      "« Le courage ne rugit pas toujours. Parfois, il est une petite voix qui dit : ‘Je recommencerai demain.’ »",
+      "« L’échec est seulement l’opportunité de recommencer de manière plus intelligente. »",
+      "« Le seul endroit où le succès vient avant le travail, c’est dans le dictionnaire. »",
+      "« Votre avenir est créé par ce que vous faites aujourd’hui, pas demain. »",
+    ];
 
-      function newQuote() {
-        const quoteEl = document.getElementById("quote");
-        quoteEl.style.opacity = 0;
-        setTimeout(() => {
-          quoteEl.textContent =
-            quotes[Math.floor(Math.random() * quotes.length)];
-          quoteEl.style.opacity = 1;
-        }, 500);
-      }
-    </script>
-  </body>
+    function newQuote() {
+      const quoteEl = document.getElementById("quote");
+      quoteEl.style.opacity = 0;
+      setTimeout(() => {
+        quoteEl.textContent =
+          quotes[Math.floor(Math.random() * quotes.length)];
+        quoteEl.style.opacity = 1;
+      }, 500);
+    }
+  </script>
+</body>
 </html>

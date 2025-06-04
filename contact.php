@@ -28,8 +28,8 @@ try {
   $mail->isSMTP();
   $mail->Host = 'smtp.gmail.com';
   $mail->SMTPAuth = true;
-  $mail->Username = 'nacimeboubekeur@gmail.com'; // ton adresse Gmail
-  $mail->Password = 'efgt zqjq ttpk uyut'; // mot de passe d'application
+  $mail->Username = '';
+  $mail->Password = ''; // mot de passe d'application
   $mail->SMTPSecure = 'tls';
   $mail->Port = 587;
 
