@@ -22,7 +22,7 @@ Actuellement à la recherche d'une **alternance en développement web** (niveau 
 ---
 
 ## 📂 Arborescence du projet
-.
+```
 ├── .vscode/ # Configuration de l'environnement
 ├── citations/ # Générateur de citations dynamiques
 ├── img/ # Ressources graphiques (projets, CV, etc.)
@@ -35,8 +35,7 @@ Actuellement à la recherche d'une **alternance en développement web** (niveau 
 ├── index.html # Page d'accueil
 ├── script.js # Comportements JS (citations, projets dynamiques, etc.)
 └── style.css # Feuille de style principale
-
----
+```
 
 ## 🚀 Fonctionnalités principales
 
