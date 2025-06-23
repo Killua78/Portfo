@@ -27,7 +27,7 @@ Actuellement à la recherche d'une **alternance en développement web** (niveau 
 ├── citations/ # Générateur de citations dynamiques
 ├── img/ # Ressources graphiques (projets, CV, etc.)
 ├── morpio/ # Jeu du morpion en JS (projet 2 joueurs humains)
-├── morse/ # Encodeur/décodeur morse en JS
+├── morse/ # Convertisseur texte → morse en PHP
 ├── phpmailer/ # Librairie pour l'envoi d'emails (formulaire de contact)
 ├── tableau/ # Page CV/Tableau de compétences
 ├── todolist/ # Mini CRUD PHP : gestion de tâches
