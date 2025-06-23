@@ -24,25 +24,25 @@ Actuellement à la recherche d'une **alternance en développement web** (niveau 
 ## 📂 Arborescence du projet
 ```
 ├── .vscode/ # Configuration de l'environnement
-├── citations/ # Générateur de citations dynamiques
+├── citations/
 ├── img/ # Ressources graphiques (projets, CV, etc.)
-├── morpio/ # Jeu du morpion en JS (projet 2 joueurs humains)
+├── morpio/
 ├── morse/ # Convertisseur texte → morse en PHP
 ├── phpmailer/ # Librairie pour l'envoi d'emails (formulaire de contact)
-├── tableau/ # Page CV/Tableau de compétences
-├── todolist/ # Mini CRUD PHP : gestion de tâches
+├── tableau/ 
+├── todolist/
 ├── contact.php # Page de contact avec traitement PHP
 ├── index.html # Page d'accueil
-├── script.js # Comportements JS (citations, projets dynamiques, etc.)
+├── script.js # Comportements JS 
 └── style.css # Feuille de style principale
 ```
 
 ## 🚀 Fonctionnalités principales
 
 - 🎯 **Morpion JS** : jeu à 2 joueurs, implémenté sans IA
-- ✅ **To-Do List** : système CRUD en PHP
+- ✅ **To-Do List** : mini gestionnaire tâches en JavaScript
 - ✉️ **Formulaire de contact** avec envoi d’email via PHPMailer
-- 📃 **Page CV/Tableau** pour résumer mes compétences
+- 📃 **Tableau** : système Mini-CRUD en PHP
 - 📜 **Générateur de citations** dynamiques
 - ⚙️ Portfolio interactif et responsive
 
