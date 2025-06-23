@@ -27,7 +27,7 @@ Actuellement à la recherche d'une **alternance en développement web** (niveau 
 ├── citations/
 ├── img/ # Ressources graphiques (projets, CV, etc.)
 ├── morpio/
-├── morse/ # Convertisseur texte → morse en PHP
+├── morse/ 
 ├── phpmailer/ # Librairie pour l'envoi d'emails (formulaire de contact)
 ├── tableau/ 
 ├── todolist/
