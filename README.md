@@ -42,6 +42,7 @@ Actuellement à la recherche d'une **alternance en développement web** (niveau 
 - 🎯 **Morpion JS** : jeu à 2 joueurs, implémenté sans IA
 - ✅ **To-Do List** : mini gestionnaire tâches en JavaScript
 - ✉️ **Formulaire de contact** avec envoi d’email via PHPMailer
+- 🔤 **Morse** : Convertisseur texte → morse en PHP 
 - 📃 **Tableau** : système Mini-CRUD en PHP
 - 📜 **Générateur de citations** dynamiques
 - ⚙️ Portfolio interactif et responsive
