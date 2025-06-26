@@ -1,5 +1,5 @@
-console.log("test");
-console.log("Bienvenue :");
+console.log("🔥 Mon script.js est chargé !");
+
 // Variables
 let joueur = "X";
 
@@ -23,6 +23,11 @@ const victoires = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+
+// Désactive les clics sur toutes les cases au départ
+document.querySelectorAll(".case").forEach((caseElement) => {
+  caseElement.style.pointerEvents = "none";
+});
 
 // choix joueur initial
 function choixJoueurInitial() {
@@ -53,6 +58,10 @@ document.querySelector("form").addEventListener("submit", (e) => {
     return;
   }
 
+  document.querySelectorAll(".case").forEach((caseElement) => {
+    caseElement.style.pointerEvents = "auto";
+  });
+
   // Récupère les valeurs actuelles
   window.playerX = document.querySelector('input[name="playerX"]').value.trim();
   window.playerO = document.querySelector('input[name="playerO"]').value.trim();
@@ -63,6 +72,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   // afficher la grille
   document.querySelector(".grille").style.display = "grid";
   document.getElementById("reset").style.display = "inline-block";
+  document.getElementById("choix").style.display = "inline-block";
 
   // initialiser la partie
   choixJoueurInitial();
@@ -164,11 +174,18 @@ function resetJeu() {
   cases.forEach((case_morp) => {
     case_morp.innerHTML = ""; // vider les cases
   });
-  joueur = "X";
+
   jeuTermine = false;
-  choixJoueurInitial();
+
   document.getElementById("messageVictoire").textContent = "";
-  document.getElementById("messageVictoire").textContent = "";
+  // affiche le formulaire au reset et on cache le reste
+  document.querySelector("#choixNoms").style.display = "flex";
+  document.querySelector(".grille").style.display = "none";
+  document.getElementById("reset").style.display = "none";
+  document.getElementById("choix").style.display = "none";
+  // vider les input
+  document.querySelector('input[name="playerX"]').value = "";
+  document.querySelector('input[name="playerO"]').value = "";
 }
 
 document.getElementById("reset").addEventListener("click", resetJeu);

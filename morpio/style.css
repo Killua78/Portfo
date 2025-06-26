@@ -16,6 +16,52 @@ body {
   height: 100vh; /* prend toute la hauteur */
 }
 
+/* ==================== FORMULAIRE CHOIX DES NOMS ==================== */
+
+#choixNoms {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+  margin: 20px auto;
+  padding: 16px;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  background-color: #f9faff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#choixNoms input[type="text"] {
+  padding: 10px 14px;
+  border: 1.8px solid #007bff;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+#choixNoms input[type="text"]:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 6px #0056b3;
+}
+
+#choixNoms button {
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#choixNoms button:hover {
+  background-color: #0056b3;
+}
+
 /* ==================== MESSAGE TOURS ==================== */
 #choix {
   font-size: 22px;
@@ -190,4 +236,5 @@ body {
     transform: translateY(2px);
   }
 }
+
 

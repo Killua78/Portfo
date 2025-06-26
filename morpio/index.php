@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $_SESSION["playerO"] = $_POST["playerO"];
 }
 
-var_dump($_SESSION['playerX'], $_SESSION['playerO']);
+// var_dump($_SESSION['playerX'], $_SESSION['playerO']);
 
 if (isset($_GET['reset'])) {
   session_destroy();
@@ -27,7 +27,7 @@ if (isset($_GET['reset'])) {
 </head>
 
 <body>
-  <form action="" method="post">
+  <form action="" method="post" id="choixNoms">
     <input type="text" name="playerX" placeholder="Nom du joueur X">
     <input type="text" name="playerO" placeholder="Nom du joueur O">
     <button type="submit">Commencer la partie</button>
