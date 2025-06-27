@@ -6,6 +6,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $_SESSION["playerO"] = $_POST["playerO"];
 }
 
+// initialisation des scores à 0
+if(!isset($_SESSION["scoreX"])){
+  $_SESSION["scoreX"] = 0;
+}
+
+if(!isset($_SESSION["scoreO"])){
+  $_SESSION["scoreO"] = 0;
+}
+
+// incrémentation des scores à la victoire + communication au fichier JS
+if(isset($_GET["winner"])){
+  if($_GET["winner"] === "X"){
+    $_SESSION["scoreX"]++;
+  } elseif($_GET["winner"] === "O"){
+    $_SESSION["scoreO"]++;
+  }
+
+   header('Content-Type: application/json');
+  echo json_encode([
+    'scoreX' => $_SESSION['scoreX'],
+    'scoreO' => $_SESSION['scoreO']
+  ]);
+  exit;
+}
 // var_dump($_SESSION['playerX'], $_SESSION['playerO']);
 
 if (isset($_GET['reset'])) {
@@ -45,6 +69,7 @@ if (isset($_GET['reset'])) {
     <div class="case"></div>
   </div>
   <button id="reset">Recommencer</button>
+  <button id="revanche">Revanche</button>
   <div id="messageVictoire"></div>
 </body>
 

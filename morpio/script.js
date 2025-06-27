@@ -188,4 +188,16 @@ function resetJeu() {
   document.querySelector('input[name="playerO"]').value = "";
 }
 
+function revancheJeu() {
+  cases.forEach((case_morp) => {
+    case_morp.innerHTML = ""; // vider les cases
+  });
+
+  jeuTermine = false;
+  choixJoueurInitial();
+  document.getElementById("messageVictoire").textContent = "";
+
+}
 document.getElementById("reset").addEventListener("click", resetJeu);
+document.getElementById("revanche").addEventListener("click", revancheJeu);
+
