@@ -7,17 +7,16 @@
 
 /* ==================== CORPS DE PAGE ==================== */
 body {
-  background-color: #f4f4f4; /* gris clair pour le fond */
+  background-color: #f4f4f4; /* gris clair */
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* prend toute la hauteur */
+  height: 100vh;
 }
 
 /* ==================== FORMULAIRE CHOIX DES NOMS ==================== */
-
 #choixNoms {
   display: flex;
   flex-direction: column;
@@ -77,11 +76,32 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* ==================== TABLEAU DES SCORES ==================== */
+#scoreboard {
+  position: fixed;
+  right: 20px;
+  top: 50px;
+  border: 1px solid #ccc;
+  padding: 12px;
+  background-color: #f9f9f9;
+  width: 200px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+#scoreboard p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+#scoreboard strong {
+  font-size: 18px;
+  color: #333;
+}
+
 /* ==================== GRILLE DU MORPION ==================== */
 .grille {
   display: grid;
-  grid-template-columns: repeat(3, 100px); /* 3 colonnes */
-  gap: 5px; /* espace entre les cases */
+  grid-template-columns: repeat(3, 100px);
+  gap: 5px;
   margin-bottom: 20px;
 }
 
@@ -89,7 +109,7 @@ body {
 .case {
   width: 100px;
   height: 100px;
-  border: 2px solid #333; /* bord foncé */
+  border: 2px solid #333;
   background-color: white;
   display: flex;
   align-items: center;
@@ -98,8 +118,6 @@ body {
   position: relative;
   transition: background-color 0.2s ease;
 }
-
-/* Effet au survol */
 .case:hover {
   background-color: #eaeaea;
 }
@@ -110,8 +128,6 @@ body {
   width: 50px;
   height: 50px;
 }
-
-/* Les deux barres qui forment la croix */
 .croix::before,
 .croix::after {
   content: "";
@@ -124,13 +140,9 @@ body {
   left: 0;
   transform-origin: center;
 }
-
-/* Première diagonale */
 .croix::before {
   transform: translateY(-50%) rotate(45deg);
 }
-
-/* Seconde diagonale */
 .croix::after {
   transform: translateY(-50%) rotate(-45deg);
 }
@@ -144,97 +156,230 @@ body {
   box-sizing: border-box;
 }
 
-/* ==================== BOUTON RESET ==================== */
-#reset {
-  padding: 10px 20px;
-  background-color: #333;
-  color: white;
+/* ==================== CONTENEUR BOUTONS ==================== */
+.buttons-container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 220px; /* pour aligner avec la grille */
+}
+
+/* ==================== BOUTONS RESET & REVANCHE ==================== */
+.buttons-container button {
+  flex: 1;
+  padding: 12px 20px;
   font-size: 16px;
-  border: none;
+  font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+  color: white;
+  user-select: none;
+}
+
+#reset {
+  background-color: #007bff;
+}
+
+#reset:hover {
+  background-color: #0056b3;
+}
+
+#reset:active {
+  transform: scale(0.97);
+}
+
+#revanche {
+  background-color: #28a745;
+}
+
+#revanche:hover {
+  background-color: #218838;
+}
+
+#revanche:active {
+  transform: scale(0.97);
 }
 
 /* ==================== MESSAGE VICTOIRE ==================== */
-
 #messageVictoire {
   font-size: 24px;
   font-weight: bold;
   margin: 20px 0;
   color: green;
-  height: 30px; /* pour éviter que le layout saute */
+  height: 30px; /* pour éviter saut layout */
   transition: opacity 0.3s ease;
 }
 
-/* Hover sur le bouton */
-#reset:hover {
-  background-color: #555;
+/* ==================== CONFIRMATION RESET ==================== */
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
 }
 
-/* ====== Responsive léger avec media queries ====== */
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 300px;
+  width: 90%;
+}
 
-/* Texte des messages un peu plus petit sur écrans étroits */
-@media (max-width: 480px) {
-  #choix {
+.modal-content p {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.modal-content button {
+  padding: 8px 16px;
+  margin: 0 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#confirmResetYes {
+  background-color: #dc3545; /* rouge */
+  color: white;
+}
+
+#confirmResetYes:hover {
+  background-color: #c82333;
+}
+
+#confirmResetNo {
+  background-color: #6c757d; /* gris */
+  color: white;
+}
+
+#confirmResetNo:hover {
+  background-color: #5a6268;
+}
+
+/* ==================== +1 ANIMÉ ==================== */
+.score-plus {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  color: #28a745; /* vert vif */
+  font-size: 1.2rem;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(0);
+}
+
+.score-plus.animate {
+  opacity: 1;
+  transform: translateY(-20px);
+}
+
+
+/* ==================== CLASSES JS VISIBILITÉ ==================== */
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  pointer-events: none;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  pointer-events: auto;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  /* Formulaire */
+  #choixNoms {
+    max-width: 100%;
+    width: 320px;
+    margin: 10px auto;
+    padding: 12px;
+  }
+
+  /* Grille du morpion : cases plus petites et largeur adaptative */
+  .grille {
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
+    gap: 6px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 320px;
+  }
+  .case {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* carré dynamique */
+  }
+  .croix, .cercle {
+    width: 70%;
+    height: 70%;
+  }
+
+  /* Conteneur boutons */
+  .buttons-container {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    gap: 10px;
+  }
+  .buttons-container button {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 0;
+  }
+
+  /* Message tour et victoire */
+  #choix, #messageVictoire {
     font-size: 18px;
     min-width: auto;
-    padding: 6px 10px;
+    padding: 8px 12px;
+    max-width: 320px;
+    text-align: center;
   }
 
-  #messageVictoire {
-    font-size: 18px;
-    margin: 15px 0;
-  }
-
-  /* Bouton reset plus petit et plus étroit */
-  #reset {
-    font-size: 14px;
-    padding: 8px 15px;
-    max-width: 150px;
-    width: 80vw;
-  }
-
-  /* Cases un peu plus petites */
-  .grille {
-    grid-template-columns: repeat(3, 80px);
-    gap: 4px;
-  }
-
-  .case {
-    width: 80px;
-    height: 80px;
-  }
-
-  .croix, .cercle {
-    width: 40px;
-    height: 40px;
-  }
-
-   #reset {
-    padding: 14px 25px;          /* plus grand pour toucher facilement */
-    font-size: 18px;             /* texte lisible */
-    max-width: 220px;
-    width: 90vw;
-    background-color: #007BFF;   /* bleu vif, style bouton moderne */
-    color: white;
-    border-radius: 12px;         /* coins arrondis */
-    box-shadow: 0 4px 8px rgba(0,123,255,0.4);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  #reset:hover,
-  #reset:focus {
-    background-color: #0056b3;
-    box-shadow: 0 6px 12px rgba(0,86,179,0.6);
-    outline: none;
-  }
-
-  #reset:active {
-    background-color: #00408d;
-    box-shadow: 0 2px 4px rgba(0,64,141,0.8);
-    transform: translateY(2px);
+  /* Scoreboard repositionné pour ne pas gêner */
+  #scoreboard {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    margin: 10px auto 20px;
+    top: auto;
+    right: auto;
+    box-shadow: none;
+    border: 1px solid #ccc;
   }
 }
 
+@media (max-width: 480px) {
+  /* Ajustements pour très petits écrans */
+  .croix, .cercle {
+    width: 60%;
+    height: 60%;
+  }
+  .buttons-container button {
+    font-size: 14px;
+    padding: 12px 0;
+  }
+  #choix, #messageVictoire {
+    font-size: 16px;
+  }
+}
 

@@ -1,5 +1,25 @@
 console.log("🔥 Mon script.js est chargé !");
 
+const grille = document.querySelector(".grille");
+const resetBtn = document.getElementById("reset");
+const revancheBtn = document.getElementById("revanche");
+const scoreboard = document.getElementById("scoreboard");
+const modal = document.getElementById("confirmResetModal");
+const btnYes = document.getElementById("confirmResetYes");
+const btnNo = document.getElementById("confirmResetNo");
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Cache les éléments tant que les noms ne sont pas encore saisis
+  resetBtn.classList.add("hidden");
+  resetBtn.classList.remove("visible");
+
+  revancheBtn.classList.add("hidden");
+  revancheBtn.classList.remove("visible");
+
+  scoreboard.classList.add("hidden");
+  scoreboard.classList.remove("visible");
+});
+
 // Variables
 let joueur = "X";
 
@@ -39,7 +59,7 @@ function choixJoueurInitial() {
     joueurActif = playerO;
   }
 
-  choixDiv.textContent = `Le joueur ${joueurActif} commence !`;
+  choixDiv.textContent = `${joueurActif} commence !`;
   choixDiv.style.color = joueur === "X" ? "red" : "blue";
 }
 
@@ -69,14 +89,47 @@ document.querySelector("form").addEventListener("submit", (e) => {
   // cacher le formulaire
   e.target.style.display = "none";
 
-  // afficher la grille
-  document.querySelector(".grille").style.display = "grid";
-  document.getElementById("reset").style.display = "inline-block";
-  document.getElementById("choix").style.display = "inline-block";
+  resetBtn.classList.add("visible");
+  resetBtn.classList.remove("hidden");
+
+  revancheBtn.classList.add("visible");
+  revancheBtn.classList.remove("hidden");
+
+  scoreboard.classList.add("visible");
+  scoreboard.classList.remove("hidden");
+
+  // afficher le tableau des scores avec les noms
+  afficherScoreboard();
 
   // initialiser la partie
   choixJoueurInitial();
 });
+
+/**
+ * Affiche le tableau de score et met à jour les noms des joueurs.
+ * Doit être appelé dès que les joueurs sont connus (après formulaire validé).
+ */
+function afficherScoreboard() {
+  const scoreboard = document.getElementById("scoreboard");
+
+  // Vérifie que les noms joueurs sont définis
+  if (typeof playerX !== "undefined" && typeof playerO !== "undefined") {
+    // Met à jour les noms dans le tableau
+    document.getElementById("playerXName").textContent = playerX;
+    document.getElementById("playerOName").textContent = playerO;
+    // Affiche le tableau
+    scoreboard.classList.add("visible");
+    scoreboard.classList.remove("hidden");
+  } else {
+    // Sinon, cache le tableau
+    scoreboard.classList.add("hidden");
+    scoreboard.classList.remove("visible");
+  }
+}
+
+// afficher les scores
+scoreboard.classList.add("visible");
+scoreboard.classList.remove("hidden");
 
 // Pour mettre à jour le message pendant le jeu, après chaque coup :
 function majMessageTour() {
@@ -124,6 +177,25 @@ function checkVictoire() {
   });
 
   if (victoire) {
+    fetch(`index.php?winner=${victoire}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const scoreXEl = document.getElementById("scoreX");
+        const scoreOEl = document.getElementById("scoreO");
+        const plusX = document.getElementById("plusX");
+        const plusO = document.getElementById("plusO");
+
+        if (victoire === "X") {
+          scoreXEl.textContent = data.scoreX;
+          plusX.classList.add("animate");
+          setTimeout(() => plusX.classList.remove("animate"), 600);
+        } else if (victoire === "O") {
+          scoreOEl.textContent = data.scoreO;
+          plusO.classList.add("animate");
+          setTimeout(() => plusO.classList.remove("animate"), 600);
+        }
+      });
+
     const gagnant = victoire === "X" ? playerX : playerO;
     document.getElementById("messageVictoire").textContent =
       "Victoire de " + gagnant + " !";
@@ -142,6 +214,7 @@ function checkVictoire() {
     }
   }
 }
+
 
 cases.forEach((case_morp) => {
   case_morp.addEventListener("click", () => {
@@ -180,12 +253,20 @@ function resetJeu() {
   document.getElementById("messageVictoire").textContent = "";
   // affiche le formulaire au reset et on cache le reste
   document.querySelector("#choixNoms").style.display = "flex";
-  document.querySelector(".grille").style.display = "none";
-  document.getElementById("reset").style.display = "none";
+
+  grille.classList.add("hidden");
+  grille.classList.remove("visible");
+
+  resetBtn.classList.add("hidden");
+  resetBtn.classList.remove("visible");
+
   document.getElementById("choix").style.display = "none";
   // vider les input
   document.querySelector('input[name="playerX"]').value = "";
   document.querySelector('input[name="playerO"]').value = "";
+
+  fetch("index.php?reset=1");
+  window.location.href = "index.php?reset=1";
 }
 
 function revancheJeu() {
@@ -196,8 +277,24 @@ function revancheJeu() {
   jeuTermine = false;
   choixJoueurInitial();
   document.getElementById("messageVictoire").textContent = "";
-
 }
-document.getElementById("reset").addEventListener("click", resetJeu);
+
 document.getElementById("revanche").addEventListener("click", revancheJeu);
 
+// modal de confirmation de reset
+resetBtn.addEventListener("click", (e) => {
+  e.preventDefault(); // bloque l'action par défaut (rechargement)
+  modal.classList.remove("hidden");
+  modal.classList.add("visible");
+});
+
+btnYes.addEventListener("click", () => {
+  // Ici on lance le reset réel (rechargement avec reset=1)
+  window.location.href = "index.php?reset=1";
+});
+
+btnNo.addEventListener("click", () => {
+  // Ferme juste la modal
+  modal.classList.remove("visible");
+  modal.classList.add("hidden");
+});
