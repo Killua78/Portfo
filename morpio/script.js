@@ -1,5 +1,6 @@
 console.log("🔥 Mon script.js est chargé !");
 
+// Récupération des éléments du DOM utilisés plusieurs fois
 const grille = document.querySelector(".grille");
 const resetBtn = document.getElementById("reset");
 const revancheBtn = document.getElementById("revanche");
@@ -8,8 +9,9 @@ const modal = document.getElementById("confirmResetModal");
 const btnYes = document.getElementById("confirmResetYes");
 const btnNo = document.getElementById("confirmResetNo");
 
+// Au chargement complet du DOM, on cache les éléments qui dépendent des noms joueurs
 document.addEventListener("DOMContentLoaded", () => {
-  // Cache les éléments tant que les noms ne sont pas encore saisis
+  // Boutons reset, revanche et tableau des scores cachés tant que noms pas saisis
   resetBtn.classList.add("hidden");
   resetBtn.classList.remove("visible");
 
@@ -20,19 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
   scoreboard.classList.remove("visible");
 });
 
-// Variables
-let joueur = "X";
+// Variables de gestion du jeu
+let joueur = "X"; // joueur courant, "X" ou "O"
+let joueurActif; // nom du joueur actuel (playerX ou playerO)
+let jeuTermine = false; // flag pour savoir si la partie est finie
 
-// nom du joueur from PHP
-let joueurActif;
-
-// pour terminer le jeu
-let jeuTermine = false;
-
-// message tour
+// Élément pour afficher le message du tour
 const choixDiv = document.querySelector("#choix");
 
-// conditions de victoire
+// Toutes les combinaisons gagnantes possibles sur la grille
 const victoires = [
   [0, 1, 2],
   [3, 4, 5],
@@ -44,100 +42,106 @@ const victoires = [
   [2, 4, 6],
 ];
 
-// Désactive les clics sur toutes les cases au départ
+// Au départ, on bloque les clics sur les cases (avant que les joueurs soient connus)
 document.querySelectorAll(".case").forEach((caseElement) => {
   caseElement.style.pointerEvents = "none";
 });
 
-// choix joueur initial
+// Choix aléatoire du joueur qui commence et mise à jour de l’affichage
 function choixJoueurInitial() {
   joueur = Math.random() < 0.5 ? "X" : "O";
 
-  if (joueur === "X") {
-    joueurActif = playerX;
-  } else {
-    joueurActif = playerO;
-  }
+  joueurActif = joueur === "X" ? playerX : playerO;
 
   choixDiv.textContent = `${joueurActif} commence !`;
   choixDiv.style.color = joueur === "X" ? "red" : "blue";
 }
 
+// Met la 1ère lettre en majuscule, le reste en minuscules
+function ucfirst(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+// Gestion du formulaire noms joueurs
 document.querySelector("form").addEventListener("submit", (e) => {
-  e.preventDefault(); // stop le rechargement
+  e.preventDefault(); // bloque le rechargement de page
 
-  const playerXInput = document
-    .querySelector('input[name="playerX"]')
-    .value.trim();
-  const playerOInput = document
-    .querySelector('input[name="playerO"]')
-    .value.trim();
+  // Récupère les noms, nettoie et formate avec majuscule initiale
+  const playerXInput = ucfirst(
+    document.querySelector('input[name="playerX"]').value.trim()
+  );
+  const playerOInput = ucfirst(
+    document.querySelector('input[name="playerO"]').value.trim()
+  );
 
+  // Vérifie que les deux noms sont remplis
   if (!playerXInput || !playerOInput) {
     alert("Remplis les deux noms !");
     return;
   }
 
+  // Active les clics sur les cases
   document.querySelectorAll(".case").forEach((caseElement) => {
     caseElement.style.pointerEvents = "auto";
   });
 
-  // Récupère les valeurs actuelles
-  window.playerX = document.querySelector('input[name="playerX"]').value.trim();
-  window.playerO = document.querySelector('input[name="playerO"]').value.trim();
+  // Stocke les noms dans la variable globale pour pouvoir les utiliser partout
+  window.playerX = playerXInput;
+  window.playerO = playerOInput;
 
-  // cacher le formulaire
+  // Cache le formulaire de saisie
   e.target.style.display = "none";
 
+  // Affiche les boutons reset et revanche
   resetBtn.classList.add("visible");
   resetBtn.classList.remove("hidden");
 
   revancheBtn.classList.add("visible");
   revancheBtn.classList.remove("hidden");
 
+  // Affiche le tableau des scores
   scoreboard.classList.add("visible");
   scoreboard.classList.remove("hidden");
 
-  // afficher le tableau des scores avec les noms
+  // Met à jour le scoreboard avec les noms
   afficherScoreboard();
 
-  // initialiser la partie
+  // Lance la partie avec choix du joueur initial
   choixJoueurInitial();
 });
 
+
 /**
- * Affiche le tableau de score et met à jour les noms des joueurs.
- * Doit être appelé dès que les joueurs sont connus (après formulaire validé).
+ * Met à jour le tableau des scores avec les noms joueurs
+ * Doit être appelé après validation des noms
  */
 function afficherScoreboard() {
   const scoreboard = document.getElementById("scoreboard");
 
-  // Vérifie que les noms joueurs sont définis
+  // Si les noms sont définis, on les affiche et montre le tableau
   if (typeof playerX !== "undefined" && typeof playerO !== "undefined") {
-    // Met à jour les noms dans le tableau
     document.getElementById("playerXName").textContent = playerX;
     document.getElementById("playerOName").textContent = playerO;
-    // Affiche le tableau
     scoreboard.classList.add("visible");
     scoreboard.classList.remove("hidden");
   } else {
-    // Sinon, cache le tableau
+    // Sinon on cache le tableau des scores
     scoreboard.classList.add("hidden");
     scoreboard.classList.remove("visible");
   }
 }
 
-// afficher les scores
+// On affiche le tableau des scores (utile au lancement)
 scoreboard.classList.add("visible");
 scoreboard.classList.remove("hidden");
 
-// Pour mettre à jour le message pendant le jeu, après chaque coup :
+// Met à jour le message indiquant à qui c’est le tour de jouer
 function majMessageTour() {
   choixDiv.textContent = `Au tour de ${joueurActif}`;
   choixDiv.style.color = joueur === "X" ? "red" : "blue";
 }
 
-// Fonctions
+// Change de joueur après chaque coup et met à jour le message
 function changerJoueur() {
   if (joueur === "X") {
     joueur = "O";
@@ -146,7 +150,7 @@ function changerJoueur() {
     joueur = "X";
     joueurActif = playerX;
   }
-  majMessageTour(); // appelle la fonction qui met à jour le message à chaque changement
+  majMessageTour();
   console.log(
     "changerJoueur: joueur =",
     joueur,
@@ -157,8 +161,13 @@ function changerJoueur() {
 
 let cases = document.querySelectorAll(".case");
 
+/**
+ * Vérifie si un joueur a gagné ou si la partie est nulle
+ * Met à jour le score via fetch, affiche message et bloque le jeu si terminé
+ */
 function checkVictoire() {
   let victoire = "";
+
   victoires.forEach((i) => {
     if (
       cases[i[0]].querySelector(".cercle") &&
@@ -177,9 +186,11 @@ function checkVictoire() {
   });
 
   if (victoire) {
+    // Envoi requête pour mettre à jour le score côté serveur
     fetch(`index.php?winner=${victoire}`)
       .then((res) => res.json())
       .then((data) => {
+        // Mise à jour des scores affichés et animation
         const scoreXEl = document.getElementById("scoreX");
         const scoreOEl = document.getElementById("scoreO");
         const plusX = document.getElementById("plusX");
@@ -196,12 +207,14 @@ function checkVictoire() {
         }
       });
 
+    // Message de victoire affiché, on bloque le jeu
     const gagnant = victoire === "X" ? playerX : playerO;
     document.getElementById("messageVictoire").textContent =
       "Victoire de " + gagnant + " !";
     choixDiv.textContent = "";
     jeuTermine = true;
   } else {
+    // Si aucune victoire, on teste si toutes les cases sont remplies (match nul)
     const toutesOccupees = [...cases].every(
       (caseElement) =>
         caseElement.querySelector(".croix") ||
@@ -215,11 +228,12 @@ function checkVictoire() {
   }
 }
 
-
+// Écouteur de clic sur chaque case
 cases.forEach((case_morp) => {
   case_morp.addEventListener("click", () => {
-    if (jeuTermine) return;
+    if (jeuTermine) return; // bloqué si partie terminée
 
+    // Ignore clic si case déjà jouée
     if (
       case_morp.querySelector(".cercle") ||
       case_morp.querySelector(".croix")
@@ -227,6 +241,7 @@ cases.forEach((case_morp) => {
       return;
     }
 
+    // Crée le symbole du joueur courant (croix ou cercle)
     const turn = document.createElement("div");
     if (joueur === "X") {
       turn.classList.add("croix");
@@ -234,24 +249,28 @@ cases.forEach((case_morp) => {
       turn.classList.add("cercle");
     }
 
-    case_morp.appendChild(turn);
-    checkVictoire();
+    case_morp.appendChild(turn); // place le symbole dans la case
+    checkVictoire(); // vérifie l’état du jeu
 
     if (!jeuTermine) {
-      changerJoueur(); // ✅ met à jour joueur ET joueurActif
+      changerJoueur(); // change de joueur si jeu pas fini
     }
   });
 });
 
+// Réinitialisation complète du jeu (reset)
 function resetJeu() {
+  // Vide toutes les cases
   cases.forEach((case_morp) => {
-    case_morp.innerHTML = ""; // vider les cases
+    case_morp.innerHTML = "";
   });
 
   jeuTermine = false;
 
+  // Vide le message de victoire
   document.getElementById("messageVictoire").textContent = "";
-  // affiche le formulaire au reset et on cache le reste
+
+  // Affiche le formulaire de saisie des noms, cache le reste
   document.querySelector("#choixNoms").style.display = "flex";
 
   grille.classList.add("hidden");
@@ -261,40 +280,48 @@ function resetJeu() {
   resetBtn.classList.remove("visible");
 
   document.getElementById("choix").style.display = "none";
-  // vider les input
+
+  // Vide les inputs noms joueurs
   document.querySelector('input[name="playerX"]').value = "";
   document.querySelector('input[name="playerO"]').value = "";
 
+  // Reset côté serveur et recharge la page
   fetch("index.php?reset=1");
   window.location.href = "index.php?reset=1";
 }
 
+// Réinitialisation pour une revanche (sans changer les joueurs)
 function revancheJeu() {
+  // Vide toutes les cases
   cases.forEach((case_morp) => {
-    case_morp.innerHTML = ""; // vider les cases
+    case_morp.innerHTML = "";
   });
 
   jeuTermine = false;
-  choixJoueurInitial();
+  choixJoueurInitial(); // nouveau joueur au hasard
+
+  // Vide le message de victoire
   document.getElementById("messageVictoire").textContent = "";
 }
 
+// Bouton revanche appelle la fonction dédiée
 document.getElementById("revanche").addEventListener("click", revancheJeu);
 
-// modal de confirmation de reset
+// Modal confirmation reset  
 resetBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // bloque l'action par défaut (rechargement)
+  e.preventDefault(); // bloque l’action par défaut (rechargement)
   modal.classList.remove("hidden");
   modal.classList.add("visible");
 });
 
+// Confirmation "Oui" dans la modal reset
 btnYes.addEventListener("click", () => {
-  // Ici on lance le reset réel (rechargement avec reset=1)
+  // Lance le reset réel (rechargement avec reset=1)
   window.location.href = "index.php?reset=1";
 });
 
+// Confirmation "Non" ferme la modal sans rien faire
 btnNo.addEventListener("click", () => {
-  // Ferme juste la modal
   modal.classList.remove("visible");
   modal.classList.add("hidden");
 });
