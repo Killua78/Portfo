@@ -112,15 +112,15 @@ if (isset($_GET['reset']) || isset($_GET['resetAll'])) {
     </div>
   </div>
 
-</body>
-<!-- communication des pseudos du formulaire au JS -->
-<?php if (isset($_SESSION['playerX']) && isset($_SESSION['playerO'])): ?>
-  <script>
-    const playerX = <?= json_encode($_SESSION['playerX']) ?>;
-    const playerO = <?= json_encode($_SESSION['playerO']) ?>;
-  </script>
-<?php endif; ?>
+ <!-- communication des pseudos du formulaire au JS -->
+  <?php if (isset($_SESSION['playerX']) && isset($_SESSION['playerO'])): ?>
+    <script>
+      const playerX = <?= json_encode($_SESSION['playerX']) ?>;
+      const playerO = <?= json_encode($_SESSION['playerO']) ?>;
+    </script>
+  <?php endif; ?>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
+</body>
 
 </html>
