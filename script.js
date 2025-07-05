@@ -41,23 +41,45 @@ document.querySelectorAll('nav a[href^="#"]').forEach((anchor) => {
 });
 
 // --- Apparition progressive des projets au scroll ---
+// Tous les projets pour apparition en cascade
 const projets = document.querySelectorAll(".projet");
-const observerOptions = {
-  threshold: 0.1,
-};
 
-const observer = new IntersectionObserver((entries) => {
+// Tous les autres éléments directs de main hors projets
+const autresElements = Array.from(document.querySelectorAll("main > *")).filter(el => !el.classList.contains("projet"));
+
+const observerOptions = { threshold: 0.1 };
+
+const observerProjets = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
+      const index = Array.from(projets).indexOf(entry.target);
+      entry.target.style.transitionDelay = `${index * 200}ms`;
       entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
+      observerProjets.unobserve(entry.target);
     }
   });
 }, observerOptions);
 
-projets.forEach((projet) => {
-  projet.classList.add("hidden"); // on cache d'abord via CSS (voir ci-dessous)
-  observer.observe(projet);
+const observerAutres = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const index = Array.from(autresElements).indexOf(entry.target);
+      entry.target.style.transitionDelay = `${index * 200}ms`;
+      entry.target.classList.add("visible");
+      observerAutres.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Initialisation : cache tout
+projets.forEach(p => {
+  p.classList.add("hidden");
+  observerProjets.observe(p);
+});
+
+autresElements.forEach(el => {
+  el.classList.add("hidden");
+  observerAutres.observe(el);
 });
 
 // --- Ton code formulaire, bouton fuyant, pulsation titre ---

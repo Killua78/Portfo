@@ -388,13 +388,13 @@ footer {
 }
 
 /* apparition fluide des éléments de la pagge */
-.projet.hidden {
+.hidden {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1.2s ease, transform 1.2s ease; /* doublé */
+  transition: opacity 1s ease, transform 1s ease;
 }
 
-.projet.visible {
+.visible {
   opacity: 1;
   transform: translateY(0);
 }
