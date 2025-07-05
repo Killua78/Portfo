@@ -1,276 +1,355 @@
-/* --------------------------------------------------
-   Reset de base et variables globales
--------------------------------------------------- */
-* {
+/* Reset & variables */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 :root {
-  --bg-color: #f9f9f9;
-  --text-color: #222;
-  --accent-color: #007acc;
+  --bg-color: #f9fafb;
+  --text-color: #222222;
+  --accent-color: #6366f1; /* Indigo 500 */
+  --accent-hover: #4f46e5; /* Indigo 600 */
+  --white: #ffffff;
+  --card-bg: rgba(255 255 255 / 0.9);
+  --card-shadow: rgba(99, 102, 241, 0.2);
+  --border-radius: 16px;
+  --font-main: 'Poppins', sans-serif;
+  --transition: 0.3s ease;
+  --max-width: 1100px;
 }
 
-/* Mode sombre (activé dynamiquement via JavaScript) */
+/* Dark mode variables */
 body.dark-mode {
   --bg-color: #121212;
-  --text-color: #eaeaea;
-  --accent-color: #66ccff;
+  --text-color: #e0e0e0;
+  --accent-color: #8b5cf6; /* Violet-500 */
+  --accent-hover: #7c3aed; /* Violet-600 */
+  --white: #1e1e1e;
+  --card-bg: rgba(30 30 30 / 0.85);
+  --card-shadow: rgba(139, 92, 246, 0.3);
 }
 
-/* --------------------------------------------------
-   Style général du body
--------------------------------------------------- */
+/* Body and typography */
 body {
+  margin: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: var(--font-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
-/* --------------------------------------------------
-   En-tête et pied de page
--------------------------------------------------- */
-header, footer {
-  text-align: center;
-  padding: 2em;
-  background-color: var(--accent-color);
-  color: white;
+/* Container */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
 }
 
-/* --------------------------------------------------
-   Navigation
--------------------------------------------------- */
-nav ul {
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255 255 255 / 0.75);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  box-shadow: 0 2px 10px rgba(0 0 0 / 0.07);
+  color: var(--accent-color);
+  padding: 2rem 1.5rem 1.5rem;
+  z-index: 1000;
+}
+
+body.dark-mode .site-header {
+  background: rgba(30 30 30 / 0.85);
+  color: var(--accent-color);
+}
+
+.site-header h1 {
+  font-weight: 700;
+  font-size: 2.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.site-header p {
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+/* Navbar */
+.navbar ul {
   list-style: none;
-  padding: 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 1em;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
 }
 
-nav a, .btn {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* Animation au survol des éléments de menu */
-ul li {
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  opacity: 0.8;
-}
-
-ul li:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  opacity: 1;
-}
-
-/* --------------------------------------------------
-   Bouton global (réutilisable)
--------------------------------------------------- */
-.btn {
-  background-color: var(--accent-color);
-  padding: 0.5em 1em;
+.navbar a,
+.navbar button {
+  font-weight: 600;
+  color: var(--accent-color);
+  background: none;
   border: none;
   cursor: pointer;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color var(--transition, 0.3s ease), transform var(--transition, 0.3s ease);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Souligné animé */
+.navbar a::after,
+.navbar button::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-hover);
+  transition: width 0.3s ease, left 0.3s ease;
+  border-radius: 2px;
+}
+
+.navbar a:hover::after,
+.navbar a:focus::after,
+.navbar button:hover::after,
+.navbar button:focus::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Changement de couleur texte au hover/focus */
+.navbar a:hover,
+.navbar button:hover,
+.navbar a:focus,
+.navbar button:focus {
+  color: var(--accent-hover);
+  outline: none;
+  /* On enlève le scale pour un effet plus sobre */
+}
+
+
+/* Main Titles */
+h2 {
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  color: var(--accent-color);
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: var(--accent-color);
+  border-radius: 3px;
+  margin: 0.5rem auto 0;
+}
+
+/* Project cards */
+.projet {
+  background-color: var(--card-bg);
+  box-shadow: 0 12px 24px var(--card-shadow);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.projet:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 32px var(--card-shadow);
+}
+
+.projet h3 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  user-select: text;
+  line-height: 1.2;
+}
+
+/* Tags */
+.tag {
   display: inline-block;
-  margin-top: 1em;
-  border-radius: 6px;
+  background-color: var(--accent-color);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
   user-select: none;
   transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #005f99;
+.projet:hover .tag {
+  background-color: var(--accent-hover);
 }
 
-/* --------------------------------------------------
-   Contenu principal
--------------------------------------------------- */
-main {
-  padding: 2em;
-  max-width: 800px;
-  margin: auto;
-}
-
-/* Section générique */
-section {
-  margin-bottom: 2em;
-}
-
-/* --------------------------------------------------
-   Section : Projets
--------------------------------------------------- */
-h2 {
-  text-align: center;
-  font-size: 2.2em;
-  margin-bottom: 1.5em;
-  position: relative;
-}
-
-h2::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  margin: 0.5em auto 0;
-  background-color: var(--accent-color);
-  border-radius: 2px;
-}
-
-.projet {
-  background-color: white;
-  padding: 1.5em;
-  border-radius: 12px;
-  margin-bottom: 1.5em;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
-
-.projet:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-.projet h3 {
-  margin-top: 0;
-  font-size: 1.4em;
-  color: var(--accent-color);
-}
-
+/* Links inside projects */
 .projet a {
+  font-weight: 600;
   color: var(--accent-color);
-  font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.projet a:hover {
-  color: #005f99;
+.projet a:hover,
+.projet a:focus {
+  color: var(--accent-hover);
   text-decoration: underline;
+  outline: none;
 }
 
-body.dark-mode .projet {
-  background-color: #1e1e1e;
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
-}
-
-/* Tags de technologies */
-.tag {
-  display: inline-block;
-  background-color: var(--accent-color);
-  color: white;
-  font-size: 0.75em;
-  padding: 0.3em 0.6em;
-  border-radius: 4px;
-  margin-left: 0.5em;
-  vertical-align: middle;
-}
-
-/* --------------------------------------------------
-   Section : CV
--------------------------------------------------- */
-
-#cv p{
+/* CV Section */
+#cv {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
-#cv p .btn{
-  margin: 0;
+#cv .btn {
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-/* --------------------------------------------------
-   Section : Contact
--------------------------------------------------- */
+#cv p a{
+  text-decoration: none;
+}
+
+/* Contact Section */
 #contactform {
-  background-color: var(--bg-color);
-  padding: 2em 0;
+  max-width: 600px;
+  margin: 3rem auto 5rem;
 }
 
-#contactform h2 {
-  text-align: center;
-  margin-bottom: 1.5em;
-  font-size: 2em;
-  color: var(--text-color);
-}
-
-/* Formulaire */
 .contact-form {
-  margin: 0 auto;
-  background-color: white;
-  padding: 2em;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 12px 24px var(--card-shadow);
   color: var(--text-color);
+  user-select: none;
+  transition: box-shadow 0.3s ease;
 }
 
-body.dark-mode .contact-form {
-  background-color: #1e1e1e;
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+.contact-form:hover,
+.contact-form:focus-within {
+  box-shadow: 0 20px 32px var(--card-shadow);
 }
 
-/* Champs du formulaire */
 .contact-form label {
   display: block;
-  margin-bottom: 0.5em;
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  user-select: text;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 0.8em;
-  margin-bottom: 1.5em;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1em;
-  background-color: #f5f5f5;
-  color: #333;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  background-color: #fefefe;
+  color: var(--text-color);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body.dark-mode .contact-form input,
 body.dark-mode .contact-form textarea {
-  background-color: #2a2a2a;
-  border: 1px solid #555;
-  color: #eee;
+  background-color: #222;
+  border-color: #444;
+  color: var(--text-color);
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: var(--accent-color);
   outline: none;
+  border-color: var(--accent-color);
   box-shadow: 0 0 8px var(--accent-color);
 }
 
-/* Message de réponse (simulé) */
-#response {
-  max-height: 0;
-  opacity: 0;
-  padding: 0 1em;
-  margin-top: 0;
-  overflow: hidden;
-  color: #155724;
-  background-color: #d4edda;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: max-height 0.6s ease, opacity 0.6s ease, padding 0.6s ease, margin-top 0.6s ease;
+textarea {
+  resize: none;
 }
 
-#response.show {
-  max-height: 200px;
-  opacity: 1;
-  padding: 1em;
-  margin-top: 1em;
+/* Buttons */
+.btn {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--white);
+  padding: 0.65rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
 }
 
-/* --------------------------------------------------
-   Section : Bouton fuyant
--------------------------------------------------- */
+.btn:hover,
+.btn:focus {
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+  outline: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background-color: var(--accent-color);
+  color: var(--white);
+  user-select: none;
+}
+
+/* Highlighted text in project titles */
+.highlight {
+  padding: 0 0.3em;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  user-select: text;
+}
+
+.projet h3:hover .highlight {
+  background: var(--accent-color);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+/* Pulse animation */
+.pulse {
+  animation: pulse 1s ease;
+}
+
+/* Bouton fuyant*/
 #tricky-btn {
   position: fixed;
   bottom: 20px;
@@ -292,7 +371,7 @@ body.dark-mode .contact-form textarea {
 }
 
 #tricky-btn:hover {
-  background-color: #005f99;
+  background-color: var(--accent-hover);
 }
 
 /* disparition de la page  */
@@ -308,51 +387,85 @@ body.dark-mode .contact-form textarea {
   transition: background-color 2s ease;
 }
 
-/* Mise en valeur du titre de projet */
-.highlight {
-  padding: 0 0.3em;
-  border-radius: 4px;
-  transition: background 0.3s ease, transform 0.3s ease;
-  display: inline-block;
+/* apparition fluide des éléments de la pagge */
+.projet.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease, transform 1.2s ease; /* doublé */
 }
 
-/* Animation au survol */
-.projet h3:hover .highlight {
-  background: var(--accent-color);
-  color: white;
-  transform: scale(1.05);
+.projet.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Animation pulsante (si activée via JS) */
-.pulse {
-  animation: pulse 1s ease;
+section {
+  scroll-margin-top: 80px;
 }
 
 @keyframes pulse {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.08); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
+/* Responsive */
 
-/* --------------------------------------------------
-   Responsive
--------------------------------------------------- */
-@media (max-width: 600px) {
-  main {
-    padding: 1em;
-  }
-
-  nav ul {
+@media (max-width: 768px) {
+  .navbar ul {
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.8rem;
   }
 
-  /* Bouton fuyant en bas centré sur mobile */
+  .container {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .site-header {
+    padding: 0;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .projet {
+    padding: 1.5rem;
+  }
+
+  #contactform {
+    margin: 2rem 1rem 4rem;
+    padding: 0;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+  }
+
   #tricky-btn {
-    top: auto;
-    bottom: 20px;
-    right: 50%;
-    transform: translateX(50%);
+    font-size : 12px;
   }
 }
+
+@media (max-width: 400px) {
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  #tricky-btn {
+    font-size : 12px;
+  }
+}
+
+

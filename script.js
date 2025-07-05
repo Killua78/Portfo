@@ -1,49 +1,110 @@
-// Mode sombre
-document.getElementById('toggle-dark').addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
+// --- Toggle Dark Mode avec localStorage ---
+const toggleDarkBtn = document.getElementById("toggle-dark");
+const body = document.body;
+
+function setDarkMode(enabled) {
+  if (enabled) {
+    body.classList.add("dark-mode");
+  } else {
+    body.classList.remove("dark-mode");
+  }
+  localStorage.setItem("darkMode", enabled ? "true" : "false");
+}
+
+// Initialisation au chargement
+const savedDarkMode = localStorage.getItem("darkMode");
+setDarkMode(savedDarkMode === "true");
+
+toggleDarkBtn.addEventListener("click", () => {
+  const isDark = body.classList.contains("dark-mode");
+  setDarkMode(!isDark);
 });
 
-// Formulaire avec envoi AJAX vers contact.php
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-  e.preventDefault();
+// --- Smooth Scroll pour ancres ---
+document.querySelectorAll('nav a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute("href").substring(1);
+    const target = document.getElementById(targetId);
+    const navbarHeight = document.querySelector("header").offsetHeight || 100;
+    if (target) {
+      const elementPosition =
+        target.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navbarHeight;
 
-  const form = this;
-  const response = document.getElementById('response') || (() => {
-    const p = document.createElement('p');
-    p.id = 'response';
-    form.appendChild(p);
-    return p;
-  })();
-
-  // Récupérer les données du formulaire
-  const formData = new FormData(form);
-
-  fetch('contact.php', {
-    method: form.method,
-    body: formData,
-  })
-  .then(res => {
-    if (!res.ok) throw new Error('Erreur réseau');
-    return res.text();
-  })
-  .then(text => {
-    // Afficher un vrai message de succès
-    response.textContent = "Message envoyé ! Merci pour ton contact.";
-    response.classList.add('show');
-    form.reset();
-  })
-  .catch(err => {
-    response.textContent = "Erreur lors de l'envoi, merci de réessayer.";
-    response.classList.add('show');
-    response.style.backgroundColor = 'red';
-    response.style.color = 'white';
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
   });
 });
 
-// Bouton "Ne surtout pas appuyer" qui s’échappe partout sur la page
-const btn = document.getElementById('tricky-btn');
+// --- Apparition progressive des projets au scroll ---
+const projets = document.querySelectorAll(".projet");
+const observerOptions = {
+  threshold: 0.1,
+};
 
-document.body.addEventListener('mousemove', (e) => {
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+projets.forEach((projet) => {
+  projet.classList.add("hidden"); // on cache d'abord via CSS (voir ci-dessous)
+  observer.observe(projet);
+});
+
+// --- Ton code formulaire, bouton fuyant, pulsation titre ---
+
+// Formulaire avec envoi AJAX vers contact.php
+document
+  .querySelector(".contact-form")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = this;
+    const response =
+      document.getElementById("response") ||
+      (() => {
+        const p = document.createElement("p");
+        p.id = "response";
+        form.appendChild(p);
+        return p;
+      })();
+
+    const formData = new FormData(form);
+
+    fetch("contact.php", {
+      method: form.method,
+      body: formData,
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erreur réseau");
+        return res.text();
+      })
+      .then((text) => {
+        response.textContent = "Message envoyé ! Merci pour ton contact.";
+        response.classList.add("show");
+        form.reset();
+      })
+      .catch((err) => {
+        response.textContent = "Erreur lors de l'envoi, merci de réessayer.";
+        response.classList.add("show");
+        response.style.backgroundColor = "red";
+        response.style.color = "white";
+      });
+  });
+
+// Bouton "Ne surtout pas appuyer" qui s’échappe partout sur la page
+const btn = document.getElementById("tricky-btn");
+
+document.body.addEventListener("mousemove", (e) => {
   const btnRect = btn.getBoundingClientRect();
   const btnCenterX = btnRect.left + btnRect.width / 2;
   const btnCenterY = btnRect.top + btnRect.height / 2;
@@ -54,7 +115,6 @@ document.body.addEventListener('mousemove', (e) => {
     let newX = btn.offsetLeft + (btnCenterX - e.clientX);
     let newY = btn.offsetTop + (btnCenterY - e.clientY);
 
-    // Limites de la page
     const maxX = window.innerWidth - btn.offsetWidth;
     const maxY = window.innerHeight - btn.offsetHeight;
 
@@ -66,16 +126,15 @@ document.body.addEventListener('mousemove', (e) => {
   }
 });
 
-// Effondrement de la page au clic sur le bouton
-btn.addEventListener('click', () => {
-  document.body.classList.add('collapse-page');
+btn.addEventListener("click", () => {
+  document.body.classList.add("collapse-page");
 });
 
-document.querySelectorAll('.projet h3').forEach(h3 => {
-  h3.addEventListener('mouseenter', () => {
-    h3.classList.add('pulse');
+document.querySelectorAll(".projet h3").forEach((h3) => {
+  h3.addEventListener("mouseenter", () => {
+    h3.classList.add("pulse");
   });
-  h3.addEventListener('mouseleave', () => {
-    h3.classList.remove('pulse');
+  h3.addEventListener("mouseleave", () => {
+    h3.classList.remove("pulse");
   });
 });
