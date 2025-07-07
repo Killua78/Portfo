@@ -1,4 +1,6 @@
-/* Reset & variables */
+/* -------------------------------------
+   RESET & VARIABLES
+------------------------------------- */
 *,
 *::before,
 *::after {
@@ -8,8 +10,8 @@
 :root {
   --bg-color: #f9fafb;
   --text-color: #222222;
-  --accent-color: #6366f1; /* Indigo 500 */
-  --accent-hover: #4f46e5; /* Indigo 600 */
+  --accent-color: #6366f1;
+  --accent-hover: #4f46e5;
   --white: #ffffff;
   --card-bg: rgba(255 255 255 / 0.9);
   --card-shadow: rgba(99, 102, 241, 0.2);
@@ -19,37 +21,44 @@
   --max-width: 1100px;
 }
 
-/* Dark mode variables */
 body.dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
-  --accent-color: #8b5cf6; /* Violet-500 */
-  --accent-hover: #7c3aed; /* Violet-600 */
+  --accent-color: #8b5cf6;
+  --accent-hover: #7c3aed;
   --white: #1e1e1e;
   --card-bg: rgba(30 30 30 / 0.85);
   --card-shadow: rgba(139, 92, 246, 0.3);
 }
 
-/* Body and typography */
+/* -------------------------------------
+   GLOBAL
+------------------------------------- */
 body {
   margin: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-main);
   line-height: 1.6;
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
 }
 
-/* Container */
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 1rem 0 1rem 0; /* +1rem vertical padding */
 }
 
-/* Header */
+section {
+  scroll-margin-top: 80px;
+  margin-bottom: 4rem; /* espacement plus large entre sections */
+}
+
+/* -------------------------------------
+   HEADER
+------------------------------------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -58,37 +67,41 @@ body {
   -webkit-backdrop-filter: saturate(180%) blur(12px);
   box-shadow: 0 2px 10px rgba(0 0 0 / 0.07);
   color: var(--accent-color);
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   z-index: 1000;
+  transition: padding 0.3s ease;
 }
 
 body.dark-mode .site-header {
   background: rgba(30 30 30 / 0.85);
-  color: var(--accent-color);
 }
 
 .site-header h1 {
   font-weight: 700;
-  font-size: 2.4rem;
-  margin-bottom: 0.25rem;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.2;
 }
 
 .site-header p {
   font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  /* margin: 0.25rem 0 1rem; */
   color: var(--text-color);
 }
 
-/* Navbar */
+/* -------------------------------------
+   NAVBAR
+------------------------------------- */
 .navbar ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2rem; /* un peu plus d’espace entre les liens */
   padding: 0;
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .navbar a,
@@ -100,14 +113,13 @@ body.dark-mode .site-header {
   cursor: pointer;
   text-decoration: none;
   font-size: 1.1rem;
-  transition: color var(--transition, 0.3s ease), transform var(--transition, 0.3s ease);
-  padding: 0.25rem 0.5rem;
+  transition: color var(--transition), transform var(--transition);
+  padding: 0.35rem 0.75rem; /* padding un peu plus grand */
   border-radius: 8px;
   position: relative;
   overflow: hidden;
 }
 
-/* Souligné animé */
 .navbar a::after,
 .navbar button::after {
   content: "";
@@ -122,32 +134,31 @@ body.dark-mode .site-header {
 }
 
 .navbar a:hover::after,
-.navbar a:focus::after,
 .navbar button:hover::after,
+.navbar a:focus::after,
 .navbar button:focus::after {
   width: 100%;
   left: 0;
 }
 
-/* Changement de couleur texte au hover/focus */
 .navbar a:hover,
 .navbar button:hover,
 .navbar a:focus,
 .navbar button:focus {
   color: var(--accent-hover);
   outline: none;
-  /* On enlève le scale pour un effet plus sobre */
 }
 
-
-/* Main Titles */
+/* -------------------------------------
+   TITRES
+------------------------------------- */
 h2 {
   font-weight: 700;
   font-size: 2.25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem; /* plus d’espace en dessous */
   text-align: center;
-  position: relative;
   color: var(--accent-color);
+  position: relative;
 }
 
 h2::after {
@@ -157,34 +168,57 @@ h2::after {
   height: 4px;
   background-color: var(--accent-color);
   border-radius: 3px;
-  margin: 0.5rem auto 0;
+  margin: 0.5rem auto 1.5rem; /* espace plus large sous la ligne */
 }
 
-/* Project cards */
-.projet {
+/* -------------------------------------
+   PROJETS
+------------------------------------- */
+
+/* On rend la carte entière cliquable via ce wrapper <a> */
+.projet-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 3rem; /* espace plus grand entre projets */
+}
+
+/* Style de la carte projet */
+.projet-link .projet {
   background-color: var(--card-bg);
   box-shadow: 0 12px 24px var(--card-shadow);
   border-radius: var(--border-radius);
-  padding: 2rem;
-  margin-bottom: 2rem;
+  padding: 2.5rem; /* un peu plus de padding */
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   cursor: default;
   user-select: none;
 }
 
-.projet:hover {
+/* Hover animation sur toute la carte */
+.projet-link:hover .projet {
   transform: translateY(-8px);
   box-shadow: 0 20px 32px var(--card-shadow);
 }
 
+/* Curseur pointer uniquement sur le titre pour guider l'utilisateur */
+.projet-link h3 {
+  cursor: default;
+  user-select: text;
+}
+
+.projet-link h3:hover {
+  cursor: pointer;
+}
+
+/* Titre projets */
 .projet h3 {
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* légèrement plus gros */
   color: var(--accent-color);
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem; /* plus d’espace */
   user-select: text;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 /* Tags */
@@ -192,63 +226,59 @@ h2::after {
   display: inline-block;
   background-color: var(--accent-color);
   color: var(--white);
-  font-size: 0.75rem;
+  font-size: 0.8rem; /* un peu plus gros */
   font-weight: 600;
-  padding: 0.25rem 0.6rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 12px;
-  margin-left: 0.5rem;
+  margin-left: 0.6rem;
   vertical-align: middle;
   user-select: none;
   transition: background-color 0.3s ease;
 }
 
-.projet:hover .tag {
+.projet-link:hover .tag {
   background-color: var(--accent-hover);
 }
 
-/* Links inside projects */
-.projet a {
-  font-weight: 600;
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
+/* Paragraphe projet */
+.projet p {
+  color: var(--text-color);
+  line-height: 1.7;
+  user-select: text;
+  margin: 0;
 }
 
-.projet a:hover,
-.projet a:focus {
-  color: var(--accent-hover);
-  text-decoration: underline;
-  outline: none;
-}
-
-/* CV Section */
+/* -------------------------------------
+   SECTION CV
+------------------------------------- */
 #cv {
   text-align: center;
-  margin-bottom: 3rem;
+  margin: 3rem 0 4rem 0; /* plus d’espace au-dessus et en-dessous */
 }
 
 #cv .btn {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.2rem; /* légèrement plus gros */
 }
 
-#cv p a{
+#cv p a {
   text-decoration: none;
 }
 
-/* Contact Section */
+/* -------------------------------------
+   CONTACT FORM
+------------------------------------- */
 #contactform {
   max-width: 600px;
-  margin: 3rem auto 5rem;
+  margin: 4rem auto 6rem; /* plus de marge verticales */
 }
 
 .contact-form {
   background-color: var(--card-bg);
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: var(--border-radius);
   box-shadow: 0 12px 24px var(--card-shadow);
   color: var(--text-color);
-  user-select: none;
   transition: box-shadow 0.3s ease;
 }
 
@@ -260,18 +290,17 @@ h2::after {
 .contact-form label {
   display: block;
   font-weight: 600;
-  margin-bottom: 0.5rem;
-  user-select: text;
+  margin-bottom: 0.75rem;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1.25rem;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.5rem;
   border: 1.5px solid #ddd;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-family: var(--font-main);
   background-color: #fefefe;
   color: var(--text-color);
@@ -296,14 +325,16 @@ textarea {
   resize: none;
 }
 
-/* Buttons */
+/* -------------------------------------
+   BOUTONS
+------------------------------------- */
 .btn {
   display: inline-block;
   background-color: var(--accent-color);
   color: var(--white);
-  padding: 0.65rem 1.5rem;
+  padding: 0.85rem 1.8rem; /* plus grand padding */
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -311,6 +342,7 @@ textarea {
   transition: background-color 0.3s ease, transform 0.2s ease;
   text-align: center;
   white-space: nowrap;
+  margin-bottom: 2rem; /* espace sous les boutons */
 }
 
 .btn:hover,
@@ -320,36 +352,7 @@ textarea {
   outline: none;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  background-color: var(--accent-color);
-  color: var(--white);
-  user-select: none;
-}
-
-/* Highlighted text in project titles */
-.highlight {
-  padding: 0 0.3em;
-  border-radius: 6px;
-  transition: background 0.3s ease, transform 0.3s ease;
-  display: inline-block;
-  user-select: text;
-}
-
-.projet h3:hover .highlight {
-  background: var(--accent-color);
-  color: var(--white);
-  transform: scale(1.05);
-}
-
-/* Pulse animation */
-.pulse {
-  animation: pulse 1s ease;
-}
-
-/* Bouton fuyant*/
+/* Bouton fuyant */
 #tricky-btn {
   position: fixed;
   bottom: 20px;
@@ -374,7 +377,40 @@ footer {
   background-color: var(--accent-hover);
 }
 
-/* disparition de la page  */
+/* -------------------------------------
+   FOOTER
+------------------------------------- */
+footer {
+  text-align: center;
+  padding: 3rem 1.5rem; /* plus grand padding vertical */
+  background-color: var(--accent-color);
+  color: var(--white);
+}
+
+/* -------------------------------------
+   ANIMATIONS
+------------------------------------- */
+.pulse {
+  animation: pulse 1s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .collapse-page * {
   transition: all 1s ease;
   opacity: 0;
@@ -387,52 +423,32 @@ footer {
   transition: background-color 2s ease;
 }
 
-/* apparition fluide des éléments de la pagge */
-.hidden {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-section {
-  scroll-margin-top: 80px;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.08);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Responsive */
-
+/* -------------------------------------
+   RESPONSIVE
+------------------------------------- */
 @media (max-width: 768px) {
-  .navbar ul {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
   .container {
-    padding: 0.5rem 0.75rem;
-  }
-
-  .site-header h1 {
-    font-size: 1.8rem;
+    padding: 0.2rem 0.75rem;
   }
 
   .site-header {
-    padding: 0;
+    padding: 0.2rem 1rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .site-header p {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 0.5rem;
   }
 
   h2 {
@@ -445,7 +461,6 @@ section {
 
   #contactform {
     margin: 2rem 1rem 4rem;
-    padding: 0;
   }
 
   .contact-form {
@@ -453,7 +468,7 @@ section {
   }
 
   #tricky-btn {
-    font-size : 12px;
+    display: none;
   }
 }
 
@@ -464,8 +479,6 @@ section {
   }
 
   #tricky-btn {
-    font-size : 12px;
+    font-size: 12px;
   }
 }
-
-
